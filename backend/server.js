@@ -53,6 +53,17 @@ app.delete('/api/v1/book/:id', (req, res) => {
     res.json({ message: `Book with ID ${id} deleted successfully!` });
 });
 
+// CHECKOUT API ENDPOINTS
+app.get('/api/v1/checkout/:bookid', (req, res) => {
+    const { bookid } = req.params;
+    res.json({ message: `Checkout book with ID ${bookid}` });
+});
+
+app.post('/api/v1/checkout/:bookid', (req, res) => {
+    const { bookid } = req.params;
+    const { userId } = req.body;
+    res.json({ message: `Checkout book with ID ${bookid} for user ${userId}` });
+});
 
 // Start the server
 app.listen(port, () => {
