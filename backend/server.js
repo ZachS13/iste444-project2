@@ -19,7 +19,9 @@ app.get("/api/v1/", (req, res) => {
 app.post("/api/v1/login", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    return res.status(400).json({ error: "Username and password are required!" });
+    return res
+      .status(400)
+      .json({ error: "Username and password are required!" });
   }
   const user = await business.login(username, password);
   if (!user) {
@@ -140,7 +142,7 @@ app.delete("/api/v1/book/:id", async (req, res) => {
 // CHECKOUT API ENDPOINTS
 app.get("/api/v1/checkout/:bookid", async (req, res) => {
   const { bookid } = req.params;
-  const checkedoutBook = await business.getCheckedoutBook(bookid);
+  const checkedoutBook = await business.getCheckedOutBook(bookid);
   if (!checkedoutBook) {
     return res
       .status(404)
