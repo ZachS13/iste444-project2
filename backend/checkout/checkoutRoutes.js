@@ -4,7 +4,7 @@ const business = require("../business.js");
 
 router.get("/:bookid", async (req, res) => {
     const { bookid } = req.params;
-    const checkedoutBook = await business.getCheckedoutBook(bookid);
+    const checkedoutBook = await business.getCheckedOutBook(bookid);
     if (!checkedoutBook) {
         return res
             .status(404)

@@ -31,7 +31,6 @@ async function createUser(username, password) {
     return null;
   }
   try {
-    // Potential business rule: enforce unique usernames
     const existing = await userRepo.findAll();
     if (existing.some((u) => u.username === username)) {
       console.error("createUser: username already exists");
@@ -126,7 +125,6 @@ async function checkoutBook(bookId, userId) {
     return null;
   }
   try {
-    // Potential rule: ensure book not already checked out
     const existing = await checkoutRepo.findById(bookId);
     if (existing && !existing.return_date) {
       console.error("checkoutBook: book is already checked out");
