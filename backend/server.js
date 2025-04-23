@@ -16,6 +16,18 @@ app.get("/api/v1/", (req, res) => {
 });
 
 // USER API ENDPOINTS
+app.post("/api/v1/login", async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({ error: "Username and password are required!" });
+  }
+  const user = await business.login(username, password);
+  if (!user) {
+    return res.status(401).json({ error: "Invalid username or password!" });
+  }
+  return res.json({ message: user });
+});
+
 app.get("/api/v1/users", async (req, res) => {
   const users = await business.getAllUsers();
   if (!users) {
@@ -147,6 +159,18 @@ app.post("/api/v1/checkout/:bookid", async (req, res) => {
       .json({ error: "There was an error checking out the book!" });
   }
   return res.json({ message: checkout });
+});
+
+app.post("/api/v1/checkin/:bookid", async (req, res) => {
+  const { bookid } = req.params;
+  const { userId } = req.body;
+  const returnedBook = await business.checkinBook(bookid, userId);
+  if (!returnedBook) {
+    return res
+      .status(404)
+      .json({ error: "There was an error returning the book!" });
+  }
+  return res.json({ message: returnedBook });
 });
 
 // Start the server
