@@ -25,7 +25,7 @@ router.post("/:bookid", async (req, res) => {
     return res.json({ message: checkout });
 });
 
-router.post("/return/:bookid", async (req, res) => {
+router.post("/:bookid/return", async (req, res) => {
     const { bookid } = req.params;
     const { userId } = req.body;
     const returnedBook = await business.checkinBook(bookid, userId);
