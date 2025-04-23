@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/ZachS13/iste444-project2#readme",
+  "bugs": {
+    "url": "https://github.com/ZachS13/iste444-project2/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZachS13/iste444-project2.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.15.1"
+  }
+}
