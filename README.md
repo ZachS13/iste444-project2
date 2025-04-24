@@ -4,6 +4,14 @@
 For this project, you'll create a custom web app stack (something other than LAMP and MEAN), which serves up a RESTful API and a client app for a really basic inventory-handling system.
 - We chose to create a stack similar to a MERN stack, but swapped out the MongoDB database with a PostgreSQL database.
 
+Our stack:
+OS: Rocky Linux
+Web server framework: Express
+Database: PostgreSQL
+Client-side: React, Javascript
+Server-side: Node
+
+
 ## Requirements
 ### 1. Create your own stack on a VM; here are some ideas:
   - Replace MySQL with MongoDB (or Neo4j or something else) in a LAMP stack
