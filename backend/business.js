@@ -2,6 +2,7 @@
 const userRepo = require("./repositories/userRepository");
 const bookRepo = require("./repositories/bookRepository");
 const checkoutRepo = require("./repositories/checkoutRepository");
+const bcrypt = require("bcrypt");
 
 async function getAllUsers() {
   try {
@@ -36,9 +37,37 @@ async function createUser(username, password) {
       console.error("createUser: username already exists");
       return null;
     }
-    return await userRepo.create({ username, password });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    return await userRepo.create(username, hashedPassword);
   } catch (err) {
     console.error("createUser failed:", err);
+    return null;
+  }
+}
+
+async function login(username, password) {
+  if (!username || !password) {
+    console.error("login: username and password are required");
+    return null;
+  }
+  try {
+    const user = await userRepo.findByUsername(username);
+    if (!user) {
+      console.error("login: username not found");
+      return null;
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      console.error("login: invalid password");
+      return null;
+    }
+
+    return { userId: user.id, username: user.username };
+  } catch (err) {
+    console.error("login failed:", err);
     return null;
   }
 }
@@ -150,7 +179,7 @@ module.exports = {
   createBook,
   updateBook,
   deleteBook,
-
+  login,
   getCheckedOutBook,
   checkoutBook,
 };
