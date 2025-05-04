@@ -2,14 +2,14 @@ const pool = require("../db");
 
 const findById = async (id) => {
   const result = await pool.query(
-    "SELECT username from User where user_id = $1",
+    "SELECT username from users where user_id = $1",
     [id]
   );
   return result.rows[0];
 };
 
 const findAll = async () => {
-  const result = await pool.query("SELECT user_id, username from User");
+  const result = await pool.query("SELECT user_id, username from users");
   return result.rows;
 };
 
