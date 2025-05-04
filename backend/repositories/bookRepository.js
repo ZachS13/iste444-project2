@@ -16,11 +16,16 @@ const findAll = async () => {
 };
 
 const create = async (title, author, genre, publishedYear) => {
-  const result = await pool.query(
-    "INSERT into books (title, author, genre, published_year) values ($1, $2, $3, $4)",
-    [title, author, genre, publishedYear]
-  );
-  return result.rows[0];
+  try {
+    const result = await pool.query(
+      "INSERT into books (title, author, genre, published_year) values ($1, $2, $3, $4) RETURNING title, author, genre, published_year",
+      [title, author, genre, publishedYear]
+    );
+    return result.rows[0];
+  } catch (err) {
+    console.error("Error inserting book:", err);
+    throw new Error("Failed to create book");
+  }
 };
 
 const update = async (id, title, author, genre, publishedYear) => {
