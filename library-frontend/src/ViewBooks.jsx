@@ -1,0 +1,57 @@
+import * as React from "react";
+import { useEffect, useState } from "react";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+
+export default function ViewBooks() {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/v1/book");
+        const data = await response.json();
+        if (response.ok) {
+          setBooks(data.message.slice(0, 10));
+        } else {
+          console.error("Failed to fetch books:", data.error);
+        }
+      } catch (err) {
+        console.error("Error fetching books:", err);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
+  return (
+    <Box sx={{ display: 'flex', gap: 4, mt: 2 }}>
+      {/* left sidebar */}
+      <Box sx={{ width: '25%', display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <Button variant="outlined" sx={{ py: 2 }}>Add Book</Button>
+        <TextField label="Enter book title to checkout book" variant="outlined" sx={{ input: { py: 2 } }} />
+        <Button variant="outlined" color="success" sx={{ py: 2 }}>SUBMIT</Button>
+      </Box>
+
+      {/* book list */}
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2, border: 1, borderColor: 'grey.400', borderRadius: 1 }}>
+        <List sx={{ width: '100%', maxWidth: 600 }}>
+          {books.map((book, idx) => (
+            <Box key={idx} sx={{ border: 1, borderColor: 'grey.400', borderRadius: 1, mb: 2, p: 1 }}>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={book.title}
+                  secondary={`${book.author} | ${book.published_year}`}
+                />
+              </ListItem>
+            </Box>
+          ))}
+        </List>
+      </Box>
+    </Box>
+  );
+}
