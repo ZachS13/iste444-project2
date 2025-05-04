@@ -6,13 +6,14 @@ const express = require("express"),
   port = 3000,
   userRoutes = require("./user/userRoutes.js"),
   bookRoutes = require("./book/bookRoutes.js"),
-  checkoutRoutes = require("./checkout/checkoutRoutes.js"); 
+  checkoutRoutes = require("./checkout/checkoutRoutes.js");
 
 const pool = require("./db.js");
+const morgan = require("morgan");
 
 app.use(cors());
 app.use(express.json());
-
+app.use(morgan("dev"));
 // DEFAULT ENDPOINT
 app.get("/api/v1/", (req, res) => {
   res.status(200).send("OK");
@@ -41,7 +42,6 @@ app.use("/api/v1/book/", bookRoutes);
 
 // CHECKOUT ROUTES
 app.use("/api/v1/checkout/", checkoutRoutes);
-
 
 (async () => {
   try {
