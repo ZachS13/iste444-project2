@@ -65,7 +65,7 @@ async function login(username, password) {
       return null;
     }
 
-    return { userId: user.id, username: user.username };
+    return { userId: user.user_id, username: user.username };
   } catch (err) {
     console.error("login failed:", err);
     return null;
