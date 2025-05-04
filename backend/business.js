@@ -1,7 +1,7 @@
 // Business layer
-const userRepo = require("./repositories/userRepository");
-const bookRepo = require("./repositories/bookRepository");
-const checkoutRepo = require("./repositories/checkoutRepository");
+const userRepo = require("./user/userRepository");
+const bookRepo = require("./book/bookRepository");
+const checkoutRepo = require("./checkout/checkoutRepository");
 const bcrypt = require("bcrypt");
 
 async function getAllUsers() {
