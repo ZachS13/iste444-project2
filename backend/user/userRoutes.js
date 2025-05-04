@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const business = require("../business.js");
 
@@ -37,6 +37,29 @@ router.post("/", async (req, res) => {
       .json({ error: "There was an error creating the user!" });
   }
   return res.json({ message: newUser });
+});
+
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ error: "Username and password are required" });
+  }
+
+  try {
+    const user = await business.login(username, password);
+
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    return res.json({ message: "Login successful", user });
+  } catch (err) {
+    console.error("Login failed:", err);
+    return res.status(500).json({ error: "There was an error during login" });
+  }
 });
 
 module.exports = router;
