@@ -6,8 +6,10 @@ import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function ViewBooks() {
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function ViewBooks() {
     <Box sx={{ display: 'flex', gap: 4, mt: 2 }}>
       {/* left sidebar */}
       <Box sx={{ width: '25%', display: 'flex', flexDirection: 'column', gap: 3 }}>
-        <Button variant="outlined" sx={{ py: 2 }}>Add Book</Button>
+        <Button variant="outlined" sx={{ py: 2 }} onClick={() => navigate('/add-book')}>Add Book</Button>
         <TextField label="Enter book title to checkout book" variant="outlined" sx={{ input: { py: 2 } }} />
         <Button variant="outlined" color="success" sx={{ py: 2 }}>SUBMIT</Button>
       </Box>

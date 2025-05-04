@@ -7,6 +7,7 @@ import ViewBooks from "./ViewBooks";
 import ProfilePage from "./ProfilePage";
 import CreateAccount from "./CreateAccount";
 import SignIn from "./SignIn";
+import AddBook from './AddBook';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/add-book" element={<AddBook />} />
         </Route>
       </Routes>
     </BrowserRouter>
