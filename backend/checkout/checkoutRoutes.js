@@ -13,6 +13,19 @@ router.get("/:bookid", async (req, res) => {
     return res.json({ message: checkedoutBook });
 });
 
+router.get("/all/:userid", async (req, res) => {
+    const { userid } = req.params;
+    const checkedoutBooks = await business.getCheckedOutBooksByUser(userid);
+    if (!checkedoutBooks) {
+        return res
+            .status(404)
+            .json({ error: "There was an error getting all checked out books!" });
+    } else if (checkedoutBooks.length === 0) {
+        return res.status(404).json({ error: "There are no checked out books!" });
+    }
+    return res.json({ message: checkedoutBooks });
+});
+
 router.post("/:bookid", async (req, res) => {
     const { bookid } = req.params;
     const { userId } = req.body;
