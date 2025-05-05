@@ -21,7 +21,7 @@ export default function MyBooks() {
     const fetchBooks = async () => {
       if (!user?.userId) return;
       try {
-        const response = await fetch(`http://172.16.1.68/api/v1/checkout/all/${user.userId}`);
+        const response = await fetch(`http://172.16.1.68:3000/api/v1/checkout/all/${user.userId}`);
         const data = await response.json();
         if (response.ok) {
           setBooks(data.message);
@@ -52,7 +52,7 @@ export default function MyBooks() {
     }
 
     try {
-      const res = await fetch(`http://172.16.1.68/api/v1/checkout/${matchingBook.book_id}`, {
+      const res = await fetch(`http://172.16.1.68:3000/api/v1/checkout/${matchingBook.book_id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.userId }),
