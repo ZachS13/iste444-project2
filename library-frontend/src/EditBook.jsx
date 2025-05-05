@@ -35,7 +35,7 @@ export default function EditBook(){
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/book");
+        const response = await fetch("http://172.16.1.68/api/v1/book");
         const data = await response.json();
         if (response.ok) {
           setBookInfo(data.message);
@@ -101,7 +101,7 @@ export default function EditBook(){
           try {
             const dataSent = {
                 method: 'PUT',
-                url: `http://localhost:3000/api/v1/book/${bookId}`,
+                url: `http://172.16.1.68/api/v1/book/${bookId}`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -113,7 +113,7 @@ export default function EditBook(){
                     publishedYear: selectedBook.yearPublished
                 }) 
             }
-            const response = await fetch(`http://localhost:3000/api/v1/book/${bookId}`, dataSent).then(
+            const response = await fetch(`http://172.16.1.68/api/v1/book/${bookId}`, dataSent).then(
               console.log("book done"));
               console.log(response.ok);
               console.log(response.body);

@@ -35,7 +35,7 @@ export default function ViewBooks() {
   async function handleRemoveBook(book) {
     const bookId = book.book_id;
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/book/${bookId}`, {
+      const response = await fetch(`http://172.16.1.68/api/v1/book/${bookId}`, {
         method: 'DELETE',
       });
 
@@ -70,7 +70,7 @@ export default function ViewBooks() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api/v1/checkout/${matchingBook.book_id}`, {
+      const res = await fetch(`http://172.16.1.68/api/v1/checkout/${matchingBook.book_id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.userId }),

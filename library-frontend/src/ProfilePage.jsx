@@ -18,7 +18,7 @@ export default function ProfilePage() {
       if (!user?.userId) return;
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/checkout/all/${user.userId}`
+          `http://172.16.1.68/api/v1/checkout/all/${user.userId}`
         );
         const data = await response.json();
         if (response.ok) {
