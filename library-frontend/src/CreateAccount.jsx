@@ -8,7 +8,7 @@ export default function CreateAccount() {
   const navigate = useNavigate();
 
   const handleCreate = async () => {
-    const res = await fetch("http://localhost:3000/api/v1/user", {
+    const res = await fetch("http://172.16.1.68/api/v1/user", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),

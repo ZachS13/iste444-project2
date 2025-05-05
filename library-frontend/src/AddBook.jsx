@@ -62,7 +62,7 @@ export default function AddBook(){
           try {
             const dataSent = {
               method: 'POST',
-              url: 'http://localhost:3000/api/v1/book',
+              url: 'http://172.16.1.68/api/v1/book',
               headers: {
                 'Content-Type': 'application/json'
               },
@@ -73,7 +73,7 @@ export default function AddBook(){
                 publishedYear: book.publishedYear
               }) 
             }
-            const response = await fetch(`http://localhost:3000/api/v1/book`, dataSent).then(
+            const response = await fetch(`http://172.16.1.68/api/v1/book`, dataSent).then(
               console.log("book done"));
               console.log(response.ok);
           //  const data = await response.json();
@@ -90,8 +90,8 @@ export default function AddBook(){
             try {
               const isEditing = !!editingBook;
               const url = isEditing
-                ? `http://localhost:3000/api/v1/book/${editingBook.book_id}`
-                : `http://localhost:3000/api/v1/book`;
+                ? `http://172.16.1.68/api/v1/book/${editingBook.book_id}`
+                : `http://172.16.1.68/api/v1/book`;
               const method = isEditing ? "PUT" : "POST";
         
               const res = await fetch(url, {
