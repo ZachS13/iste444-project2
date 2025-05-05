@@ -13,7 +13,12 @@ const logUserId = require("./middleware/logUserId");
 const morgan = require("morgan");
 require("dotenv").config();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: `http://${process.env.DATABASE_HOST}:3001`,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(logUserId);
