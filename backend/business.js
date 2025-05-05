@@ -148,6 +148,10 @@ async function getCheckedOutBook(id) {
   }
 }
 
+async function getCheckedOutBooksByUser(userid) {
+  // checked out books by user
+}
+
 async function checkoutBook(bookId, userId) {
   if (!bookId || !userId) {
     console.error("checkoutBook: bookId and userId are required");
@@ -181,5 +185,6 @@ module.exports = {
   deleteBook,
   login,
   getCheckedOutBook,
+  getCheckedOutBooksByUser,
   checkoutBook,
 };
