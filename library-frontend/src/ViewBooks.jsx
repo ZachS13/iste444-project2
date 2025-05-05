@@ -38,6 +38,7 @@ export default function ViewBooks() {
 
 
   async function handleRemoveBook(book){
+    //WARNING: UNTESTED FOR MULTIPLE BOOKS THAT HAVE THE SAME TITLE
     console.log(book);
     const bookId = book.id;
     try {
@@ -45,7 +46,7 @@ export default function ViewBooks() {
         method: 'DELETE',
         url: `http://localhost:3000/api/v1/book/${bookId}`
       }
-      const response = await fetch(`http://localhost:3000/api/v1/book`, dataSent).then(
+      const response = await fetch(`http://localhost:3000/api/v1/book/${bookId}`, dataSent).then(
         console.log("book deletion sent"));
         console.log(response.ok);
     //  const data = await response.json();
