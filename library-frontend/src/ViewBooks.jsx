@@ -17,7 +17,7 @@ export default function ViewBooks() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/book");
+        const response = await fetch("http://172.16.1.68/api/v1/book");
         const data = await response.json();
         if (response.ok) {
           setAllBookInfo(data.message);
