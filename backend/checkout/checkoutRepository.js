@@ -16,7 +16,12 @@ const findById = async (id) => {
   return result.rows[0];
 };
 
+async function findByUserId(userId) {
+// find by userId
+}
+
 module.exports = {
   create,
   findById,
+  findByUserId,
 };

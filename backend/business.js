@@ -148,8 +148,19 @@ async function getCheckedOutBook(id) {
   }
 }
 
-async function getCheckedOutBooksByUser(userid) {
-  // checked out books by user
+async function getCheckedOutBooksByUser(userId) {
+  if (!userId) {
+    console.error('getCheckedOutBooksByUser: userId is required');
+    return null;
+  }
+
+  try {
+    const checkouts = await checkoutRepo.findByUserId(userId);
+    return checkouts;    // expect an array (even if empty)
+  } catch (err) {
+    console.error('Error in getCheckedOutBooksByUser:', err);
+    return null;
+  }
 }
 
 async function checkoutBook(bookId, userId) {
@@ -177,7 +188,6 @@ module.exports = {
   getAllUsers,
   getUserById,
   createUser,
-
   getAllBooks,
   getBookById,
   createBook,
