@@ -8,20 +8,23 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useNavigate } from "react-router-dom";
 
-export default function ViewBooks() {
+export default function MyBooks() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
-  const [allBookInfo, setAllBookInfo] = useState([]);
   const [checkoutTitle, setCheckoutTitle] = useState("");
+
+  // Parse user only once
+  const rawUser = localStorage.getItem("user");
+  const user = rawUser ? JSON.parse(rawUser) : null;
 
   useEffect(() => {
     const fetchBooks = async () => {
+      if (!user?.userId) return;
       try {
-        const response = await fetch("http://localhost:3000/api/v1/book");
+        const response = await fetch(`http://localhost:3000/api/v1/checkout/all/${user.userId}`);
         const data = await response.json();
         if (response.ok) {
-          setAllBookInfo(data.message);
-          setBooks(data.message.slice(0, 10));
+          setBooks(data.message);
         } else {
           console.error("Failed to fetch books:", data.error);
         }
@@ -29,40 +32,17 @@ export default function ViewBooks() {
         console.error("Error fetching books:", err);
       }
     };
-    fetchBooks();
-  }, []);
 
-  async function handleRemoveBook(book) {
-    const bookId = book.book_id;
-    try {
-      const response = await fetch(`http://localhost:3000/api/v1/book/${bookId}`, {
-        method: 'DELETE',
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        setAllBookInfo(prev => prev.filter(b => b.book_id !== bookId));
-        alert("Book deleted successfully!");
-      } else {
-        alert(data.error || "Failed to delete book.");
-      }
-    } catch (err) {
-      console.error("Error deleting book:", err);
-      alert("Something went wrong.");
-    }
-  }
-  
-  
+    fetchBooks();
+  }, []); // Only run once on component mount
 
   const handleCheckout = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.userId) {
       alert("Please log in first.");
       return;
     }
 
-    const matchingBook = allBookInfo.find(
+    const matchingBook = books.find(
       (book) => book.title.toLowerCase() === checkoutTitle.toLowerCase()
     );
 
@@ -106,14 +86,12 @@ export default function ViewBooks() {
 
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2, border: 1, borderColor: 'grey.400', borderRadius: 1 }}>
         <List sx={{ width: '100%', maxWidth: 600 }}>
-          {allBookInfo.map((book, idx) => (
+          {books.map((book, idx) => (
             <Box key={idx} sx={{ border: 1, borderColor: 'grey.400', borderRadius: 1, mb: 2, p: 1 }}>
-              <ListItem disablePadding
-                secondaryAction={<button onClick={() => handleRemoveBook(book)}>Delete</button>}
-              >
+              <ListItem disablePadding>
                 <ListItemText
                   primary={book.title}
-                  secondary={`${book.author} | ${book.published_year}`}
+                  secondary={`Checked out: ${book.checkout_date} | Return by: ${book.return_date || "N/A"}`}
                 />
               </ListItem>
             </Box>

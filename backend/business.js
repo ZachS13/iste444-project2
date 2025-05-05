@@ -128,12 +128,14 @@ async function deleteBook(id) {
     return null;
   }
   try {
-    return await bookRepo.remove(id);
+    await checkoutRepo.deleteCheckoutsByBookId(id); // 👈 delete checkouts first
+    return await bookRepo.remove(id);               // 👈 then delete the book
   } catch (err) {
     console.error(`deleteBook(${id}) failed:`, err);
     return null;
   }
 }
+
 
 async function getCheckedOutBook(id) {
   if (!id) {
@@ -149,8 +151,18 @@ async function getCheckedOutBook(id) {
 }
 
 async function getCheckedOutBooksByUser(userid) {
-  // checked out books by user
+  if (!userid) {
+    console.error("getCheckedOutBooksByUser: userId is required");
+    return null;
+  }
+  try {
+    return await checkoutRepo.findByUserId(userid);
+  } catch (err) {
+    console.error(`getCheckedOutBooksByUser(${userid}) failed:`, err);
+    return null;
+  }
 }
+
 
 async function checkoutBook(bookId, userId) {
   if (!bookId || !userId) {
@@ -172,6 +184,8 @@ async function checkoutBook(bookId, userId) {
     return null;
   }
 }
+
+
 
 module.exports = {
   getAllUsers,

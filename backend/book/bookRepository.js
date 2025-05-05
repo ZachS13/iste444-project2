@@ -44,10 +44,16 @@ const remove = async (id) => {
   return result.rows[0];
 };
 
+const deleteCheckoutsByBookId = async (bookId) => {
+  await pool.query("DELETE FROM checkouts WHERE book_id = $1", [bookId]);
+};
+
+
 module.exports = {
   findAll,
   findById,
   create,
   update,
   remove,
+  deleteCheckoutsByBookId
 };

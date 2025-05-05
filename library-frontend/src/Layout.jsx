@@ -16,7 +16,7 @@ export default function Layout() {
       {/* nav bar */}
       <Box sx={{ display: 'flex', gap: 2, borderBottom: 1, pb: 1, mb: 2 }}>
         <Button variant="outlined" onClick={() => navigate('/')}>View Books</Button>
-        <Button variant="outlined">View My Books</Button>
+        <Button variant="outlined" onClick={() => navigate('/my-books')}>View My Books</Button>
         <Button variant="outlined" onClick={() => navigate('/create-account')}>Create Account</Button>
         <Button variant="outlined" onClick={() => navigate('/sign-in')}>Sign In</Button>
       </Box>
