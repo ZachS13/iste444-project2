@@ -42,7 +42,6 @@ export default function ViewBooks() {
   
     const bookId = book.book_id;
     try {
-
       const dataSent = {
         method: 'DELETE',
         url: `http://localhost:3000/api/v1/book/${bookId}`
@@ -50,16 +49,13 @@ export default function ViewBooks() {
       const response = await fetch(`http://localhost:3000/api/v1/book/${bookId}`, dataSent).then(
         console.log("book deletion sent")
       );
-      //  console.log(response.ok);
-    
-      // if (response.ok) {
-      //maybe use this block to dynamically remove book entry?
-      //   console.log("book deleted");
-      // } 
+     
     } catch (err) {
       console.error("Error fetching books:", err);
     }
   }
+
+ 
 
   return (
     <Box sx={{ display: 'flex', gap: 4, mt: 2 }}>
@@ -67,7 +63,7 @@ export default function ViewBooks() {
       <Box sx={{ width: '25%', display: 'flex', flexDirection: 'column', gap: 3 }}>
         <Button variant="outlined" sx={{ py: 2 }} onClick={() => navigate('/add-book')}>Add Book</Button>
         <TextField label="Enter book title to checkout book" variant="outlined" sx={{ input: { py: 2 } }} />
-        <Button variant="outlined" color="success" sx={{ py: 2 }}>SUBMIT</Button>
+        <Button variant="outlined" color="success" sx={{ py: 2 }} onClick={() => navigate('/edit-book')}>Edit</Button>
       </Box>
 
       {/* book list */}
@@ -78,7 +74,10 @@ export default function ViewBooks() {
               <ListItem disablePadding
               
               secondaryAction={
-               <button onClick={ () => { handleRemoveBook(book) }}> Delete</button>
+               <><button onClick={() => { handleRemoveBook(book); } }> Delete</button>
+              
+               </>
+
               }>
                 
                 <ListItemText
