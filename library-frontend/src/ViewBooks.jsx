@@ -15,6 +15,7 @@ export default function ViewBooks() {
   const [books, setBooks] = useState([]);
   const [allBookInfo, setAllBookInfo] = useState([]);
 
+  //GET data for all books currently in database
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -34,16 +35,11 @@ export default function ViewBooks() {
     fetchBooks();
   }, []);
 
-  async function removeBook(){
-
-  }
-
-
+  
+//Look at the selected book's (parameter) id and send a DELETE API call to delete it from the database
+//need to refresh web page to see it removed from the list
   async function handleRemoveBook(book){
-    //WARNING: UNTESTED FOR MULTIPLE BOOKS THAT HAVE THE SAME TITLE
-    console.log(book);
-    console.log(book.book_id);
-    //console.log(allBookInfo);
+  
     const bookId = book.book_id;
     try {
 
@@ -52,13 +48,14 @@ export default function ViewBooks() {
         url: `http://localhost:3000/api/v1/book/${bookId}`
       }
       const response = await fetch(`http://localhost:3000/api/v1/book/${bookId}`, dataSent).then(
-        console.log("book deletion sent"));
-        console.log(response.ok);
-    //  const data = await response.json();
-      if (response.ok) {
-        // setBooks(data.message);
-        console.log("book deleted");
-      } 
+        console.log("book deletion sent")
+      );
+      //  console.log(response.ok);
+    
+      // if (response.ok) {
+      //maybe use this block to dynamically remove book entry?
+      //   console.log("book deleted");
+      // } 
     } catch (err) {
       console.error("Error fetching books:", err);
     }

@@ -15,6 +15,7 @@ export default function AddBook(){
      const [genre, setGenre] = useState([]);
      const [ publishedYear, setYear] = useState([]);
 
+     //Make empty book entity with mostly empty values
      const [book, setBook] = useState({
       title: "",
       author: "",
@@ -22,6 +23,7 @@ export default function AddBook(){
       publishedYear: 1900,
     });
   
+    //change book's title to whatever is in the text field
     function handleTitleChange(e){
       setBook({
         ...book,
@@ -30,6 +32,7 @@ export default function AddBook(){
 
     }
 
+     //change book's author to whatever is in the text field
     function handleAuthorChange(e){
       setBook({
         ...book,
@@ -37,6 +40,7 @@ export default function AddBook(){
       });
     }
 
+     //change book's genre to whatever is in the text field
     function handleGenreChange(e){
       setBook({
         ...book,
@@ -44,6 +48,7 @@ export default function AddBook(){
       });
     }
 
+     //change book's year to whatever is in the text field
     function handleYearChange(e){
       setBook({
         ...book,
@@ -52,6 +57,7 @@ export default function AddBook(){
 
     }
 
+    //send book's info to database to make a new entry
       async function createBook(){
         
           console.log(book);
