@@ -37,7 +37,10 @@ const update = async (id, title, author, genre, publishedYear) => {
 };
 
 const remove = async (id) => {
-  const result = await pool.query("DELETE FROM books WHERE book_id = $1", [id]);
+  const result = await pool.query(
+    "DELETE FROM books WHERE book_id = $1 RETURNING title",
+    [id]
+  );
   return result.rows[0];
 };
 
