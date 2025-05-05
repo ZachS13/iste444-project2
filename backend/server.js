@@ -10,6 +10,7 @@ const express = require("express"),
 
 const pool = require("./db.js");
 const morgan = require("morgan");
+require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
@@ -48,8 +49,10 @@ app.use("/api/v1/checkout/", checkoutRoutes);
     await pool.query("SELECT NOW()");
     console.log("Database connected");
 
-    app.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`);
+    app.listen(port, process.env.DATABASE_HOST, () => {
+      console.log(
+        `Server is running on http://${process.env.DATABASE_HOST}:${port}`
+      );
     });
   } catch (err) {
     console.error("Could not connect to database:", err);
