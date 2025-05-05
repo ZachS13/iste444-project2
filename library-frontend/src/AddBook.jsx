@@ -10,30 +10,89 @@ import Box from '@mui/material/Box';
 
 export default function AddBook(){
      
-     const [books, setBooks] = useState([]);
-     const [bookData, setBookData] = React.useState({
+     const [title, setTitle] = useState([]);
+     const [author, setAuthor] = useState([]);
+     const [genre, setGenre] = useState([]);
+     const [ publishedYear, setYear] = useState([]);
+
+     const [book, setBook] = useState({
       title: "",
       author: "",
-      yearPublished: 1900,
       genre: "",
+      publishedYear: 1900,
     });
   
-      useEffect(() => {
-        
-        
-      }, []);
-    
+    function handleTitleChange(e){
+      setBook({
+        ...book,
+        title: e.target.value
+      });
 
+    }
+
+    function handleAuthorChange(e){
+      setBook({
+        ...book,
+        author: e.target.value
+      });
+    }
+
+    function handleGenreChange(e){
+      setBook({
+        ...book,
+        genre: e.target.value
+      });
+    }
+
+    function handleYearChange(e){
+      setBook({
+        ...book,
+        publishedYear: e.target.value
+      });
+
+    }
+
+      async function createBook(){
+        
+          console.log(book);
+          try {
+            const dataSent = {
+              method: 'POST',
+              url: 'http://localhost:3000/api/v1/book',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                title: book.title,
+                author: book.author,
+                genre: book.genre,
+                publishedYear: book.publishedYear
+              }) 
+            }
+            const response = await fetch(`http://localhost:3000/api/v1/book`, dataSent).then(
+              console.log("book done"));
+              console.log(response.ok);
+          //  const data = await response.json();
+            if (response.ok) {
+              // setBooks(data.message);
+              console.log("book posted");
+            } 
+          } catch (err) {
+            console.error("Error fetching books:", err);
+          }
+          }
+     
       return (
         <Box sx={{ display: 'flex', gap: 4, mt: 2 }}>
           {/* left sidebar */}
           <Box sx={{ width: '25%', display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <TextField label="Book title" variant="outlined" sx={{ input: { py: 2 } }} />
-          <TextField label="Author" variant="outlined" sx={{ input: { py: 2 } }} />
-          <TextField label="Year published" variant="outlined" sx={{ input: { py: 2 } }} />
-          <TextField label="Genre(s)" variant="outlined" sx={{ input: { py: 2 } }} />
 
-            <Button variant="outlined" color="success" sx={{ py: 2 }}>Add Book</Button>
+          <TextField label="Book title" variant="outlined" sx={{ input: { py: 2 } }} value={book.title} onChange={handleTitleChange}/>
+          <TextField label="Author" variant="outlined" sx={{ input: { py: 2 } }} value={book.author} onChange={handleAuthorChange}/>
+          <TextField label="Year published" variant="outlined" sx={{ input: { py: 2 } }} value={book.yearPublished} onChange={handleYearChange} />
+          <TextField label="Genre(s)" variant="outlined" sx={{ input: { py: 2 } }} value={book.genre} onChange={handleGenreChange}/>
+
+            <Button variant="outlined" color="success" sx={{ py: 2 }} onClick={() => { createBook()}}>Add Book</Button>
           </Box>
     
         
