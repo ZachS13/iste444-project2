@@ -125,8 +125,15 @@ export default function ViewBooks() {
             <Box key={idx} sx={{ border: 1, borderColor: 'grey.400', borderRadius: 1, mb: 2, p: 1 }}>
               <ListItem
                 disablePadding
+                onClick={() => navigate('/add-book', { state: { book } })}
+                sx={{ cursor: "pointer" }}
                 secondaryAction={
-                  <button onClick={() => handleRemoveBook(book)}>Delete</button>
+                  <button onClick={(e) => {
+                    e.stopPropagation(); // prevent navigation
+                    handleRemoveBook(book);
+                  }}>
+                    Delete
+                  </button>
                 }
               >
                 <ListItemText

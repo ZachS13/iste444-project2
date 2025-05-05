@@ -108,19 +108,22 @@ async function createBook(title, author, genre, publishedYear) {
 }
 
 async function updateBook(id, title, author, genre, publishedYear) {
-  if (!id || !title || !author || !publishedYear) {
-    console.error(
-      "updateBook: id, title, author, and publishedYear are required"
-    );
-    return null;
-  }
   try {
-    return await bookRepo.update(id, title, author, genre, publishedYear);
+    // optionally validate book exists before update
+    const bookExists = await bookRepo.findById(id);
+    if (!bookExists) {
+      console.warn(`No book with ID ${id} found for update.`);
+      return null;
+    }
+
+    const updated = await bookRepo.update(id, title, author, genre, publishedYear);
+    return updated || bookExists; // return original if no changes
   } catch (err) {
-    console.error(`updateBook(${id}) failed:`, err);
+    console.error("updateBook failed:", err);
     return null;
   }
 }
+
 
 async function deleteBook(id) {
   if (!id) {
@@ -128,8 +131,8 @@ async function deleteBook(id) {
     return null;
   }
   try {
-    await checkoutRepo.deleteCheckoutsByBookId(id); // 👈 delete checkouts first
-    return await bookRepo.remove(id);               // 👈 then delete the book
+    await checkoutRepo.deleteCheckoutsByBookId(id); // delete checkouts first
+    return await bookRepo.remove(id);               // then delete the book
   } catch (err) {
     console.error(`deleteBook(${id}) failed:`, err);
     return null;
