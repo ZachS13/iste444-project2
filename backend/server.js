@@ -9,11 +9,13 @@ const express = require("express"),
   checkoutRoutes = require("./checkout/checkoutRoutes.js");
 
 const pool = require("./db.js");
+const logUserId = require("./middleware/logUserId");
 const morgan = require("morgan");
 
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(logUserId);
 // DEFAULT ENDPOINT
 app.get("/api/v1/", (req, res) => {
   res.status(200).send("OK");
