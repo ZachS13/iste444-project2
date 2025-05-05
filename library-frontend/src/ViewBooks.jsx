@@ -13,6 +13,7 @@ import { IconButton } from "@mui/material";
 export default function ViewBooks() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
+  const [allBookInfo, setAllBookInfo] = useState([]);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -20,6 +21,7 @@ export default function ViewBooks() {
         const response = await fetch("http://localhost:3000/api/v1/book");
         const data = await response.json();
         if (response.ok) {
+          setAllBookInfo(data.message);
           setBooks(data.message.slice(0, 10));
         } else {
           console.error("Failed to fetch books:", data.error);
@@ -40,20 +42,22 @@ export default function ViewBooks() {
   async function handleRemoveBook(book){
     //WARNING: UNTESTED FOR MULTIPLE BOOKS THAT HAVE THE SAME TITLE
     console.log(book);
-    const bookId = book.id;
+    //console.log(allBookInfo);
+
     try {
-      const dataSent = {
-        method: 'DELETE',
-        url: `http://localhost:3000/api/v1/book/${bookId}`
-      }
-      const response = await fetch(`http://localhost:3000/api/v1/book/${bookId}`, dataSent).then(
-        console.log("book deletion sent"));
-        console.log(response.ok);
-    //  const data = await response.json();
-      if (response.ok) {
-        // setBooks(data.message);
-        console.log("book deleted");
-      } 
+
+    //   const dataSent = {
+    //     method: 'DELETE',
+    //     url: `http://localhost:3000/api/v1/book/${bookId}`
+    //   }
+    //   const response = await fetch(`http://localhost:3000/api/v1/book/${bookId}`, dataSent).then(
+    //     console.log("book deletion sent"));
+    //     console.log(response.ok);
+    // //  const data = await response.json();
+    //   if (response.ok) {
+    //     // setBooks(data.message);
+    //     console.log("book deleted");
+    //   } 
     } catch (err) {
       console.error("Error fetching books:", err);
     }
@@ -71,7 +75,7 @@ export default function ViewBooks() {
       {/* book list */}
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2, border: 1, borderColor: 'grey.400', borderRadius: 1 }}>
         <List sx={{ width: '100%', maxWidth: 600 }}>
-          {books.map((book, idx) => (
+          {allBookInfo.map((book, idx) => (
             <Box key={idx} sx={{ border: 1, borderColor: 'grey.400', borderRadius: 1, mb: 2, p: 1 }}>
               <ListItem disablePadding
               
