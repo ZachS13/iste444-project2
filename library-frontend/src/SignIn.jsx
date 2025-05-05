@@ -13,9 +13,14 @@ export default function SignIn() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
+
     const data = await res.json();
-    if (res.ok) navigate("/profile");
-    else alert(data.error);
+    if (res.ok) {
+      localStorage.setItem("user", JSON.stringify(data.message)); // store user info
+      navigate("/profile");
+    } else {
+      alert(data.error);
+    }
   };
 
   return (
