@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, List, ListItem, ListItemText, ListItemAvatar } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
@@ -10,6 +11,26 @@ export default function ProfilePage() {
     localStorage.removeItem("user");
     navigate("/sign-in");
   };
+
+   const [books, setBooks] = useState([]);
+  
+    useEffect(() => {
+      const fetchBooks = async () => {
+        try {
+          const response = await fetch("http://localhost:3000/api/v1/book");
+          const data = await response.json();
+          if (response.ok) {
+            setBooks(data.message.slice(0, 10));
+          } else {
+            console.error("Failed to fetch books:", data.error);
+          }
+        } catch (err) {
+          console.error("Error fetching books:", err);
+        }
+      };
+  
+      fetchBooks();
+    }, []);
 
   return (
     <Box sx={{ p: 3 }}>
