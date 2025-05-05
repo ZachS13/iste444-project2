@@ -10,7 +10,7 @@ const findById = async (id) => {
 
 const findAll = async () => {
   const result = await pool.query(
-    "SELECT title, author, genre, published_year from books"
+    "SELECT book_id, title, author, genre, published_year from books"
   );
   return result.rows;
 };
