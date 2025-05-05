@@ -38,9 +38,9 @@ export default function ViewBooks() {
       const response = await fetch(`http://localhost:3000/api/v1/book/${bookId}`, {
         method: 'DELETE',
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         setAllBookInfo(prev => prev.filter(b => b.book_id !== bookId));
         alert("Book deleted successfully!");
@@ -52,8 +52,6 @@ export default function ViewBooks() {
       alert("Something went wrong.");
     }
   }
-  
-  
 
   const handleCheckout = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -92,8 +90,11 @@ export default function ViewBooks() {
 
   return (
     <Box sx={{ display: 'flex', gap: 4, mt: 2 }}>
+      {/* left sidebar */}
       <Box sx={{ width: '25%', display: 'flex', flexDirection: 'column', gap: 3 }}>
-        <Button variant="outlined" sx={{ py: 2 }} onClick={() => navigate('/add-book')}>Add Book</Button>
+        <Button variant="outlined" sx={{ py: 2 }} onClick={() => navigate('/add-book')}>
+          Add Book
+        </Button>
         <TextField
           label="Enter book title to checkout book"
           variant="outlined"
@@ -101,15 +102,32 @@ export default function ViewBooks() {
           value={checkoutTitle}
           onChange={(e) => setCheckoutTitle(e.target.value)}
         />
-        <Button variant="outlined" color="success" sx={{ py: 2 }} onClick={handleCheckout}>SUBMIT</Button>
+        <Button variant="outlined" color="success" sx={{ py: 2 }} onClick={handleCheckout}>
+          SUBMIT
+        </Button>
       </Box>
 
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2, border: 1, borderColor: 'grey.400', borderRadius: 1 }}>
+      {/* book list */}
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          p: 2,
+          border: 1,
+          borderColor: 'grey.400',
+          borderRadius: 1,
+        }}
+      >
         <List sx={{ width: '100%', maxWidth: 600 }}>
           {allBookInfo.map((book, idx) => (
             <Box key={idx} sx={{ border: 1, borderColor: 'grey.400', borderRadius: 1, mb: 2, p: 1 }}>
-              <ListItem disablePadding
-                secondaryAction={<button onClick={() => handleRemoveBook(book)}>Delete</button>}
+              <ListItem
+                disablePadding
+                secondaryAction={
+                  <button onClick={() => handleRemoveBook(book)}>Delete</button>
+                }
               >
                 <ListItemText
                   primary={book.title}
